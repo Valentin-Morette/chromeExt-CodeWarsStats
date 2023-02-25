@@ -4,15 +4,15 @@
 	"version": "1.0.1",
 	"description": "Get description",
 	"icons": {
-		"16": "assets/images/logo.png",
-		"48": "assets/images/logo.png",
-		"128": "assets/images/logo.png"
+		"16": "assets/images/cw.png",
+		"48": "assets/images/cw.png",
+		"128": "assets/images/cw.png"
 	},
 	"action": {
 		"default_icon": {
-			"16": "assets/images/logo.png",
-			"48": "assets/images/logo.png",
-			"128": "assets/images/logo.png"
+			"16": "assets/images/cw.png",
+			"48": "assets/images/cw.png",
+			"128": "assets/images/cw.png"
 		},
 		"default_popup": "popup.html",
 		"default_title": "popup title"
