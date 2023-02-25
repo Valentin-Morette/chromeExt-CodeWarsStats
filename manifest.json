@@ -1,20 +1,30 @@
 {
 	"manifest_version": 3,
-	"name": "Extension name",
+	"name": "Codewars Stats",
 	"version": "1.0.1",
-	"description": "Get description",
+	"description": "Get your codewars stats",
 	"icons": {
-		"16": "assets/images/cw.png",
-		"48": "assets/images/cw.png",
-		"128": "assets/images/cw.png"
+		"16": "assets/images/cw-b.png",
+		"48": "assets/images/cw-b.png",
+		"128": "assets/images/cw-b.png"
 	},
 	"action": {
 		"default_icon": {
-			"16": "assets/images/cw.png",
-			"48": "assets/images/cw.png",
-			"128": "assets/images/cw.png"
+			"16": "assets/images/cw-b.png",
+			"48": "assets/images/cw-b.png",
+			"128": "assets/images/cw-b.png"
 		},
 		"default_popup": "popup.html",
-		"default_title": "popup title"
+		"default_title": "Codewars Stats"
+	},
+	"permissions": [
+		"tabs",
+		"storage",
+		"activeTab",
+		"unlimitedStorage",
+		"windows"
+	],
+	"background": {
+		"service_worker": "background.js"
 	}
 }
