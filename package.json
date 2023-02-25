@@ -1,0 +1,14 @@
+{
+	"name": "chrome-extension",
+	"version": "1.0.0",
+	"description": "",
+	"main": "background.js",
+	"scripts": {
+		"start": "npm init && npm i jquery"
+	},
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"jquery": "^3.6.3"
+	}
+}
