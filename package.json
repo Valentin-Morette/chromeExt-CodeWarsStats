@@ -4,7 +4,8 @@
 	"description": "",
 	"main": "background.js",
 	"scripts": {
-		"start": "npm init && npm i jquery"
+		"start": "npm init && npm i jquery",
+		"push": "git add . && git commit -m 'script push' && git push origin main"
 	},
 	"author": "",
 	"license": "ISC",
