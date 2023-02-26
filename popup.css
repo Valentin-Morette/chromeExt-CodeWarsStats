@@ -1,7 +1,73 @@
+@font-face {
+	font-family: 'jose';
+	src: url(./assets/fonts/JosefinSans-VariableFont_wght.ttf);
+}
+
 * {
 	margin: 0;
 	padding: 0;
 }
-html {
+
+body {
+	background-color: #292a2d;
+	color: #a9a9b3;
+	font-size: 1rem;
+	width: 13.5rem;
+	border: 2px solid #a9a9b3;
 	padding: 1rem;
+	font-family: 'jose';
+}
+
+ul {
+	list-style: none;
+}
+
+#name {
+	font-size: 1.2rem;
+	font-weight: bold;
+}
+
+#avatar {
+	width: 20px;
+}
+
+#title {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.5rem;
+	margin-bottom: 1rem;
+}
+
+#cwstatsAll > li,
+#languages > li {
+	margin-bottom: 0.25rem;
+}
+
+#inputPseudo {
+	width: 90%;
+	height: 1.5rem;
+	border-radius: 5px;
+	border: none;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	text-indent: 10px;
+	font-family: 'jose';
+}
+
+#inputPseudo:focus {
+	outline: none;
+}
+
+#inputPseudo::placeholder {
+	color: #a9a9b3;
+}
+
+#infos {
+	margin-bottom: 1rem;
+}
+
+#error {
+	text-align: center;
 }

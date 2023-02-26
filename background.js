@@ -1,22 +1,21 @@
-function changeIcon(tab) {
-	if (tab.url) {
-		if (tab.url.includes('codewars.com')) {
-			chrome.action.setIcon({ path: '/assets/images/cw.png' });
-		} else {
-			chrome.action.setIcon({ path: '/assets/images/cw-b.png' });
-		}
-	}
-}
+import { changeIcon } from './functions.js';
+
+let cwPage = false;
 
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
-	changeIcon(tab);
+	cwPage = changeIcon(tab);
 });
 
 chrome.tabs.onActivated.addListener((activeInfo) => {
 	chrome.tabs.get(activeInfo.tabId, (tab) => {
-		changeIcon(tab);
-		chrome.storage.sync.get(['input'], function (result) {
-			console.log('Pseudo stocké : ' + result.input);
-		});
+		cwPage = changeIcon(tab);
 	});
+});
+
+var myVariable = 'hello world';
+
+chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+	if (request.type === 'hello') {
+		sendResponse({ myVariable: cwPage });
+	}
 });

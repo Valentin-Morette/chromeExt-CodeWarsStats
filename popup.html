@@ -6,13 +6,31 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="stylesheet" href="popup.css" />
 		<script src="node_modules/jquery/dist/jquery.min.js"></script>
-		<script src="index.js"></script>
+		<script type="module" src="popup.js"></script>
 		<title>Document</title>
 	</head>
 	<body>
-		<button id="btn">Click Me</button>
-		<p id="name"></p>
-		<input type="text" id="input" />
-		<button id="btn2">Click Me</button>
+		<!-- <button id="btn">Click Me</button> -->
+
+		<!-- <button id="btn2">Click Me</button> -->
+		<div id="infos">
+			<div id="title">
+				<img id="avatar" src="/assets/images/codewars.svg" />
+				<h1 id="name"></h1>
+			</div>
+			<ul id="cwstatsAll">
+				<li id="rank"></li>
+				<li id="katas"></li>
+				<li id="honor"></li>
+				<ul id="languages"></ul>
+				<li id="leaderboardPosition"></li>
+			</ul>
+		</div>
+		<input
+			type="text"
+			id="inputPseudo"
+			placeholder="Entrer un pseudo CodeWars"
+		/>
+		<p id="error"></p>
 	</body>
 </html>
