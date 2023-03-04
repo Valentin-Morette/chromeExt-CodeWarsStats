@@ -4,6 +4,7 @@ import {
 	capitalizeFirstLetter,
 	points,
 	thousandSeparator,
+	formatDate,
 } from './functions.js';
 var jqueryUrl = chrome.runtime.getURL('node_modules/jquery/dist/jquery.min.js');
 var script = document.createElement('script');
@@ -14,7 +15,9 @@ function fetchCodewarsData(user, infos) {
 	return fetch(`https://www.codewars.com/api/v1/users/${user}`)
 		.then((response) => {
 			if (!response.ok) {
-				clearData();
+				chrome.storage.sync.set({ codewarsData: '' }, function () {
+					clearData();
+				});
 				throw new Error('Invalid response from server');
 			}
 			return response.json();
@@ -39,7 +42,7 @@ function displayData(data) {
 	$('#katas').html(`Katas réussi: ${data.codeChallenges.totalCompleted}`);
 	$('#rank').html(`Rang : ${data.ranks.overall.name}`);
 	if (data.leaderboardPosition === null) {
-		$('#leaderboardPosition').html('Leaderboard : Non disponible');
+		$('#leaderboardPosition').html('Leaderboard : Inconnu');
 	} else {
 		$('#leaderboardPosition').html(
 			`Leaderboard : ${thousandSeparator(data.leaderboardPosition)} ème`
@@ -75,10 +78,69 @@ function saveAndDisplayData(data) {
 	});
 }
 
+function swap() {
+	if ($('#kataCheck').is(':checked')) {
+		$('#cwstatsAll').hide();
+		$('#challengeInfos').show();
+		$('#inputPseudo').hide();
+		$('#error').empty();
+		$('#infos').css('margin-bottom', '0');
+	} else if ($('#pseudoCheck').is(':checked')) {
+		$('#cwstatsAll').show();
+		$('#challengeInfos').hide();
+		$('#inputPseudo').show();
+		$('#infos').css('margin-bottom', '1rem');
+	}
+}
+
 $(document).ready(function () {
-	chrome.storage.sync.clear();
+	let kataId = '';
+
+	swap();
+
+	chrome.runtime.sendMessage({ type: 'pageCw' }, function (response) {
+		if (!response.cwPage) {
+			$('.selector').hide();
+		}
+		kataId = response.kataId;
+		if (kataId !== '') {
+			fetch(`https://www.codewars.com/api/v1/code-challenges/${kataId}`)
+				.then((response) => {
+					if (!response.ok) {
+						throw new Error('Invalid response from server');
+					}
+					return response.json();
+				})
+				.then((data) => {
+					console.log(data);
+					$('#challengeRank').html(`Rang : ${data.rank.name}`);
+					$('#challengeCategory').html(`Catégorie : ${data.category}`);
+					$('#challengeCreator').html(`Créateur : ${data.createdBy.username}`);
+					$('#challengeCreatedAt').html(
+						`Créé le : ${formatDate(data.createdAt)}`
+					);
+					$('#challengeTotalAttempts').html(
+						`Tentatives : ${data.totalAttempts}`
+					);
+					$('#challengeTotalCompleted').html(
+						`Complétés : ${data.totalCompleted}`
+					);
+					$('#challengePercentCompleted').html(
+						`Taux complétion : ${(
+							(data.totalCompleted / data.totalAttempts) *
+							100
+						).toFixed(2)}%`
+					);
+				})
+				.catch((error) => {
+					console.error(error);
+				});
+		} else {
+			console.log('kataId vide');
+		}
+	});
+
 	chrome.storage.sync.get(['codewarsData'], function (result) {
-		console.log(result);
 		if (result.codewarsData) {
 			displayData(result.codewarsData);
 			fetchCodewarsData(result.codewarsData.username, result.codewarsData);
@@ -86,9 +148,6 @@ $(document).ready(function () {
 	});
 
 	$('#btn').on('click', function () {
-		chrome.runtime.sendMessage({ type: 'hello' }, function (response) {
-			console.log(response);
-		});
 		// chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
 		// 	var url = tabs[0].url;
 		// 	console.log('URL actuelle : ' + url);
@@ -114,5 +173,15 @@ $(document).ready(function () {
 			fetchCodewarsData(inputValue);
 			$(this).val('');
 		}
+	});
+
+	$('input[type="checkbox"]').on('change', function () {
+		if ($(this).is(':checked')) {
+			$('input[type="checkbox"]').not(this).prop('checked', false);
+		}
+		if ($('input[type="checkbox"]:checked').length === 0) {
+			$(this).prop('checked', true);
+		}
+		swap();
 	});
 });

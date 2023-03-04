@@ -10,13 +10,22 @@
 		<title>Document</title>
 	</head>
 	<body>
-		<!-- <button id="btn">Click Me</button> -->
-
-		<!-- <button id="btn2">Click Me</button> -->
 		<div id="infos">
 			<div id="title">
 				<img id="avatar" src="/assets/images/codewars.svg" />
 				<h1 id="name"></h1>
+			</div>
+			<div class="selector">
+				<label class="container">
+					<input type="checkbox" id="kataCheck" />
+					<span class="checkmark kataLabel"></span>
+					<span class="text">Kata</span>
+				</label>
+				<label class="container">
+					<input type="checkbox" id="pseudoCheck" checked />
+					<span class="checkmark pseudoLabel"></span>
+					<span class="text">Pseudo</span>
+				</label>
 			</div>
 			<ul id="cwstatsAll">
 				<li id="rank"></li>
@@ -24,6 +33,15 @@
 				<li id="honor"></li>
 				<ul id="languages"></ul>
 				<li id="leaderboardPosition"></li>
+			</ul>
+			<ul id="challengeInfos">
+				<li id="challengeRank"></li>
+				<li id="challengeCategory"></li>
+				<li id="challengeCreator"></li>
+				<li id="challengeCreatedAt"></li>
+				<li id="challengeTotalAttempts"></li>
+				<li id="challengeTotalCompleted"></li>
+				<li id="challengePercentCompleted"></li>
 			</ul>
 		</div>
 		<input

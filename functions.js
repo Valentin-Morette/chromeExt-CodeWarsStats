@@ -1,19 +1,33 @@
-function changeIcon(tab) {
-	if (tab.url) {
-		if (tab.url.includes('codewars.com')) {
-			chrome.action.setIcon({ path: '/assets/images/cw.png' });
-			return true;
-		} else {
-			chrome.action.setIcon({ path: '/assets/images/cw-b.png' });
-			return false;
-		}
-	}
+function verifUrl(tab) {
+	if (!tab.url) return false;
+	const isKataUrl = /^https:\/\/www.codewars.com\/kata\/\w+/.test(tab.url);
+	return isKataUrl;
+}
+
+function changeIcon(validUrl) {
+	const iconPath = validUrl
+		? '/assets/images/cw.png'
+		: '/assets/images/cw-b.png';
+	chrome.action.setIcon({ path: iconPath });
+}
+
+function findKata(url) {
+	const kataId = url.split('/');
+	return kataId[4];
 }
 
 function compare(a, b) {
 	if (a[1].score < b[1].score) return 1;
 	if (a[1].score > b[1].score) return -1;
 	return 0;
+}
+
+function formatDate(dateString) {
+	const date = new Date(dateString);
+	const day = date.getDate().toString().padStart(2, '0');
+	const month = (date.getMonth() + 1).toString().padStart(2, '0');
+	const year = date.getFullYear().toString();
+	return `${day}/${month}/${year}`;
 }
 
 function objectTitle(data) {
@@ -37,10 +51,13 @@ function thousandSeparator(number) {
 }
 
 export {
+	verifUrl,
 	changeIcon,
+	findKata,
 	compare,
 	objectTitle,
 	capitalizeFirstLetter,
 	points,
 	thousandSeparator,
+	formatDate,
 };

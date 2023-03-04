@@ -1,21 +1,34 @@
-import { changeIcon } from './functions.js';
+import { verifUrl, changeIcon, findKata } from './functions.js';
 
 let cwPage = false;
+let kataId = '';
+let previousUrl = null;
+
+function fullCtrl(tab) {
+	cwPage = verifUrl(tab);
+	changeIcon(cwPage);
+	kataId = cwPage ? findKata(tab.url) : '';
+}
 
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
-	cwPage = changeIcon(tab);
+	if (changeInfo.status === 'complete') {
+		const currentUrl = tab.url;
+		if (currentUrl !== previousUrl) {
+			previousUrl = currentUrl;
+			fullCtrl(tab);
+			console.log('URL change');
+		}
+	}
 });
 
 chrome.tabs.onActivated.addListener((activeInfo) => {
 	chrome.tabs.get(activeInfo.tabId, (tab) => {
-		cwPage = changeIcon(tab);
+		fullCtrl(tab);
 	});
 });
 
-var myVariable = 'hello world';
-
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-	if (request.type === 'hello') {
-		sendResponse({ myVariable: cwPage });
+	if (request.type === 'pageCw') {
+		sendResponse({ cwPage: cwPage, kataId: kataId });
 	}
 });
