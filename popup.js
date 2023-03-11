@@ -120,10 +120,10 @@ $(document).ready(function () {
 						`Créé le : ${formatDate(data.createdAt)}`
 					);
 					$('#challengeTotalAttempts').html(
-						`Tentatives : ${data.totalAttempts}`
+						`Tentatives : ${thousandSeparator(data.totalAttempts)}`
 					);
 					$('#challengeTotalCompleted').html(
-						`Complétés : ${data.totalCompleted}`
+						`Complétés : ${thousandSeparator(data.totalCompleted)}`
 					);
 					$('#challengePercentCompleted').html(
 						`Taux complétion : ${(

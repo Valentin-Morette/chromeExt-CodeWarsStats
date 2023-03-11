@@ -17,7 +17,7 @@
 		"default_popup": "popup.html",
 		"default_title": "Codewars Stats"
 	},
-	"permissions": ["tabs", "storage", "activeTab", "windows"],
+	"permissions": ["tabs", "storage"],
 	"background": {
 		"service_worker": "background.js",
 		"type": "module"
