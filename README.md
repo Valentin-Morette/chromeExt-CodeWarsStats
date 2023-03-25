@@ -30,4 +30,4 @@ CodewarsStats est une extension Chrome pratique pour les utilisateurs de [CodeWa
 
 ## Licence
 
-Cette extension est sous licence MIT.
+Cette extension est sous licence [MIT](LICENSE).
