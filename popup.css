@@ -94,7 +94,7 @@ ul {
 	left: 0;
 	height: 100%;
 	width: 100%;
-	background-color: var(--color3);
+	background-color: var(--color);
 }
 
 .container input[type='checkbox'] {
@@ -112,7 +112,7 @@ ul {
 }
 
 .container input[type='checkbox']:checked ~ .checkmark {
-	background-color: var(--color);
+	background-color: var(--color3);
 }
 
 .selector {

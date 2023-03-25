@@ -1,6 +1,7 @@
 function verifUrl(tab) {
 	if (!tab.url) return false;
-	const isKataUrl = /^https:\/\/www.codewars.com\/kata\/\w+/.test(tab.url);
+	const isKataUrl =
+		/^https:\/\/www\.codewars\.com\/kata\/[a-zA-Z0-9]{24}\/?.*/.test(tab.url);
 	return isKataUrl;
 }
 

@@ -16,7 +16,6 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
 		if (currentUrl !== previousUrl) {
 			previousUrl = currentUrl;
 			fullCtrl(tab);
-			console.log('URL change');
 		}
 	}
 });
