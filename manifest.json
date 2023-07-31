@@ -1,7 +1,7 @@
 {
 	"manifest_version": 3,
 	"name": "Codewars Stats",
-	"version": "1.0.2",
+	"version": "1.1.0",
 	"description": "Get your codewars stats",
 	"icons": {
 		"16": "assets/images/cw-b.png",

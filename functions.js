@@ -1,3 +1,5 @@
+let translations = null;
+
 function verifUrl(tab) {
 	if (!tab.url) return false;
 	const isKataUrl =
@@ -44,11 +46,40 @@ function capitalizeFirstLetter(string) {
 }
 
 function points(score) {
-	return score === 1 ? 'point' : 'points';
+	return score === 1
+		? `${getTranslation('point')}`
+		: `${getTranslation('points')}`;
 }
 
 function thousandSeparator(number) {
 	return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+}
+
+function loadTranslations() {
+	const userLang = (navigator.language || navigator.userLanguage).substring(
+		0,
+		2
+	);
+
+	return fetch(`translations/${userLang}.json`)
+		.then((response) => response.json())
+		.then((data) => {
+			translations = data;
+			return translations;
+		})
+		.catch((error) => {
+			// Load default language (e.g., English) if the user's language is not supported
+			return fetch('translations/en.json')
+				.then((response) => response.json())
+				.then((data) => {
+					translations = data;
+					return translations;
+				});
+		});
+}
+
+function getTranslation(key) {
+	return translations ? translations[key] : '';
 }
 
 export {
@@ -61,4 +92,6 @@ export {
 	points,
 	thousandSeparator,
 	formatDate,
+	loadTranslations,
+	getTranslation,
 };

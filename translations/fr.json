@@ -1,0 +1,21 @@
+{
+	"rank": "Rang",
+	"succeededKata": "Katas réussis",
+	"totalScore": "Score total",
+	"honor": "Honneur",
+	"leaderboard": "Classement",
+	"point": "point",
+	"points": "points",
+	"category": "Catégorie",
+	"creator": "Créateur",
+	"createdAt": "Créé le",
+	"attempts": "Tentatives",
+	"completed": "Complétés",
+	"percentCompleted": "Taux complétion",
+	"foundUser": "Utilisateur non trouvé",
+	"unknownUser": "Inconnu",
+	"nickname": "Pseudo",
+	"inputPlaceholder": "Entrer un pseudo Codewars",
+	"ordinalFirst": "er",
+	"ordinalOther": "ème"
+}

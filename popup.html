@@ -24,13 +24,14 @@
 				<label class="container">
 					<input type="checkbox" id="pseudoCheck" checked />
 					<span class="checkmark pseudoLabel"></span>
-					<span class="text">Pseudo</span>
+					<span class="text" id="nickname">Nickname</span>
 				</label>
 			</div>
 			<ul id="cwstatsAll">
 				<li id="rank"></li>
 				<li id="katas"></li>
 				<li id="honor"></li>
+				<li id="score"></li>
 				<ul id="languages"></ul>
 				<li id="leaderboardPosition"></li>
 			</ul>
@@ -47,8 +48,9 @@
 		<input
 			type="text"
 			id="inputPseudo"
-			placeholder="Entrer un pseudo CodeWars"
+			placeholder="Enter a Codewars nickname"
 		/>
+		<!-- <button id="btn">Valider</button> -->
 		<p id="error"></p>
 	</body>
 </html>

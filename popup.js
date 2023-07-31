@@ -5,6 +5,8 @@ import {
 	points,
 	thousandSeparator,
 	formatDate,
+	loadTranslations,
+	getTranslation,
 } from './functions.js';
 var jqueryUrl = chrome.runtime.getURL('node_modules/jquery/dist/jquery.min.js');
 var script = document.createElement('script');
@@ -38,14 +40,29 @@ function fetchCodewarsData(user, infos) {
 
 function displayData(data) {
 	$('#name').html(data.username);
-	$('#honor').html(`Score total : ${data.honor} ${points(data.honor)}`);
-	$('#katas').html(`Katas réussi: ${data.codeChallenges.totalCompleted}`);
-	$('#rank').html(`Rang : ${data.ranks.overall.name}`);
+	$('#honor').html(
+		`${getTranslation('honor')} : ${data.honor} ${points(data.honor)}`
+	);
+	$('#score').html(
+		`${getTranslation('totalScore')} : ${data.ranks.overall.score} ${points(
+			data.ranks.overall.score
+		)}`
+	);
+	$('#katas').html(
+		`${getTranslation('succeededKata')} : ${data.codeChallenges.totalCompleted}`
+	);
+	$('#rank').html(`${getTranslation('rank')} : ${data.ranks.overall.name}`);
 	if (data.leaderboardPosition === null) {
-		$('#leaderboardPosition').html('Leaderboard : Inconnu');
+		$('#leaderboardPosition').html(
+			`${getTranslation('leaderboard')} : ${getTranslation('unknownUser')}`
+		);
 	} else {
 		$('#leaderboardPosition').html(
-			`Leaderboard : ${thousandSeparator(data.leaderboardPosition)} ème`
+			`${getTranslation('leaderboard')} : ${thousandSeparator(
+				data.leaderboardPosition
+			)}${getTranslation(
+				data.leaderboardPosition === 1 ? 'ordinalFirst' : 'ordinalOther'
+			)}`
 		);
 	}
 	const languagesData = objectTitle(data).sort(compare);
@@ -64,11 +81,12 @@ function displayData(data) {
 function clearData() {
 	$('#name').empty();
 	$('#honor').empty();
+	$('#score').empty();
 	$('#katas').empty();
 	$('#rank').empty();
 	$('#leaderboardPosition').empty();
 	$('#languages').empty();
-	$('#error').html('Utilisateur non trouvé');
+	$('#error').html(`${getTranslation('foundUser')}`);
 	$('#inputPseudo').css('margin-bottom', '1rem');
 }
 
@@ -98,81 +116,73 @@ $(document).ready(function () {
 
 	swap();
 
-	chrome.runtime.sendMessage({ type: 'pageCw' }, function (response) {
-		if (!response.cwPage) {
-			$('.selector').hide();
-		}
-		kataId = response.kataId;
-		if (kataId !== '') {
-			fetch(`https://www.codewars.com/api/v1/code-challenges/${kataId}`)
-				.then((response) => {
-					if (!response.ok) {
-						throw new Error('Invalid response from server');
-					}
-					return response.json();
-				})
-				.then((data) => {
-					console.log(data);
-					$('#challengeRank').html(`Rang : ${data.rank.name}`);
-					$('#challengeCategory').html(`Catégorie : ${data.category}`);
-					$('#challengeCreator').html(`Créateur : ${data.createdBy.username}`);
-					$('#challengeCreatedAt').html(
-						`Créé le : ${formatDate(data.createdAt)}`
-					);
-					$('#challengeTotalAttempts').html(
-						`Tentatives : ${thousandSeparator(data.totalAttempts)}`
-					);
-					$('#challengeTotalCompleted').html(
-						`Complétés : ${thousandSeparator(data.totalCompleted)}`
-					);
-					$('#challengePercentCompleted').html(
-						`Taux complétion : ${(
-							(data.totalCompleted / data.totalAttempts) *
-							100
-						).toFixed(2)}%`
-					);
-				})
-				.catch((error) => {
-					console.error(error);
-				});
-		} else {
-			console.log('kataId vide');
-		}
-	});
+	loadTranslations().then(() => {
+		$('#nickname').html(getTranslation('nickname'));
+		$('#inputPseudo').attr('placeholder', getTranslation('inputPlaceholder'));
 
-	chrome.storage.sync.get(['codewarsData'], function (result) {
-		if (result.codewarsData) {
-			displayData(result.codewarsData);
-			fetchCodewarsData(result.codewarsData.username, result.codewarsData);
-		}
-	});
+		chrome.runtime.sendMessage({ type: 'pageCw' }, function (response) {
+			if (!response.cwPage) {
+				$('.selector').hide();
+			}
+			kataId = response.kataId;
+			if (kataId !== '') {
+				fetch(`https://www.codewars.com/api/v1/code-challenges/${kataId}`)
+					.then((response) => {
+						if (!response.ok) {
+							throw new Error('Invalid response from server');
+						}
+						return response.json();
+					})
+					.then((data) => {
+						$('#challengeRank').html(
+							`${getTranslation('rank')} : ${data.rank.name}`
+						);
+						$('#challengeCategory').html(
+							`${getTranslation('category')} : ${data.category}`
+						);
+						$('#challengeCreator').html(
+							`${getTranslation('creator')} : ${data.createdBy.username}`
+						);
+						$('#challengeCreatedAt').html(
+							`${getTranslation('createdAt')} : ${formatDate(data.createdAt)}`
+						);
+						$('#challengeTotalAttempts').html(
+							`${getTranslation('attempts')} : ${thousandSeparator(
+								data.totalAttempts
+							)}`
+						);
+						$('#challengeTotalCompleted').html(
+							`${getTranslation('completed')} : ${thousandSeparator(
+								data.totalCompleted
+							)}`
+						);
+						$('#challengePercentCompleted').html(
+							`${getTranslation('percentCompleted')} : ${(
+								(data.totalCompleted / data.totalAttempts) *
+								100
+							).toFixed(2)}%`
+						);
+					})
+					.catch((error) => {
+						console.error(error);
+					});
+			}
+		});
 
-	$('#btn').on('click', function () {
-		// chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-		// 	var url = tabs[0].url;
-		// 	console.log('URL actuelle : ' + url);
-		// });
-		// var input = $('#input').val();
-		// if (chrome.storage.sync) {
-		// 	chrome.storage.sync.set({ input: input }, function () {
-		// 		console.log('1', input);
-		// 	});
-		// } else {
-		// 	chrome.storage.local.set({ input: input }, function () {
-		// 		console.log('2', input);
-		// 	});
-		// }
-		// chrome.storage.sync.get(['input'], function (result) {
-		// 	console.log('Pseudo stocké : ' + result.input);
-		// });
-	});
+		chrome.storage.sync.get(['codewarsData'], function (result) {
+			if (result.codewarsData) {
+				displayData(result.codewarsData);
+				fetchCodewarsData(result.codewarsData.username, result.codewarsData);
+			}
+		});
 
-	$('#inputPseudo').on('keyup', function (event) {
-		if (event.key === 'Enter') {
-			let inputValue = $(this).val();
-			fetchCodewarsData(inputValue);
-			$(this).val('');
-		}
+		$('#inputPseudo').on('keyup', function (event) {
+			if (event.key === 'Enter') {
+				let inputValue = $(this).val();
+				fetchCodewarsData(inputValue);
+				$(this).val('');
+			}
+		});
 	});
 
 	$('input[type="checkbox"]').on('change', function () {
