@@ -1,6 +1,82 @@
 {
-	"message": {
-		"message": "The 'Codewars Stats and Infos' Chrome extension provides advanced statistics on a searched user and additional information on the current Codewars challenge. With this extension, you can easily access user statistics, including the number of completed kata and the overall ranking. Whether you're looking to improve your own Codewars rank or get insight into other users' progress, the 'Codewars Stats and Infos' extension has you covered.",
-		"description": "La description de l'extension en anglais"
+	"manifestDescription": {
+		"message": "Get your codewars stats",
+		"description": "Description of the extension in the manifest"
+	},
+	"rank": {
+		"message": "Rank",
+		"description": "Label for rank"
+	},
+	"succeededKata": {
+		"message": "Successful katas",
+		"description": "Label for successful katas"
+	},
+	"totalScore": {
+		"message": "Total score",
+		"description": "Label for total score"
+	},
+	"honor": {
+		"message": "Honor",
+		"description": "Label for honor"
+	},
+	"leaderboard": {
+		"message": "Leaderboard",
+		"description": "Label for leaderboard"
+	},
+	"point": {
+		"message": "point",
+		"description": "Label for point"
+	},
+	"points": {
+		"message": "points",
+		"description": "Label for points"
+	},
+	"category": {
+		"message": "Category",
+		"description": "Label for category"
+	},
+	"creator": {
+		"message": "Creator",
+		"description": "Label for creator"
+	},
+	"createdAt": {
+		"message": "Created at",
+		"description": "Label for creation date"
+	},
+	"attempts": {
+		"message": "Attempts",
+		"description": "Label for attempts"
+	},
+	"completed": {
+		"message": "Completed",
+		"description": "Label for completed challenges"
+	},
+	"percentCompleted": {
+		"message": "Percent completed",
+		"description": "Label for percent completed"
+	},
+	"foundUser": {
+		"message": "User not found",
+		"description": "Message for a user not found"
+	},
+	"unknownUser": {
+		"message": "Unknown",
+		"description": "Message for an unknown user"
+	},
+	"nickname": {
+		"message": "Nickname",
+		"description": "Label for nickname"
+	},
+	"inputPlaceholder": {
+		"message": "Enter a Codewars nickname",
+		"description": "Placeholder for nickname input"
+	},
+	"ordinalFirst": {
+		"message": "st",
+		"description": "Ordinal suffix for first"
+	},
+	"ordinalOther": {
+		"message": "th",
+		"description": "Ordinal suffix for other numbers"
 	}
 }

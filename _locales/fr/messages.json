@@ -1,6 +1,82 @@
 {
-	"message": {
-		"message": "L'extension Chrome 'Codewars Stats and Infos' fournit des statistiques avancées sur un utilisateur recherché et des informations supplémentaires sur le défi Codewars actuel. Avec cette extension, vous pouvez facilement accéder aux statistiques des utilisateurs, notamment le nombre de kata terminés et le classement général. Que vous cherchiez à améliorer votre propre classement Codewars ou à avoir un aperçu des progrès des autres utilisateurs, l'extension 'Codewars Stats and Infos' est faite pour vous.",
-		"description": "La description de l'extension en français"
+	"manifestDescription": {
+		"message": "Obtenez vos statistiques Codewars.",
+		"description": "Description dans le manifest.json"
+	},
+	"rank": {
+		"message": "Rang",
+		"description": "Label pour le rang"
+	},
+	"succeededKata": {
+		"message": "Katas réussis",
+		"description": "Label pour les Katas réussis"
+	},
+	"totalScore": {
+		"message": "Score total",
+		"description": "Label pour le score total"
+	},
+	"honor": {
+		"message": "Honneur",
+		"description": "Label pour l'honneur"
+	},
+	"leaderboard": {
+		"message": "Classement",
+		"description": "Label pour le classement"
+	},
+	"point": {
+		"message": "point",
+		"description": "Label pour le point"
+	},
+	"points": {
+		"message": "points",
+		"description": "Label pour les points"
+	},
+	"category": {
+		"message": "Catégorie",
+		"description": "Label pour la catégorie"
+	},
+	"creator": {
+		"message": "Créateur",
+		"description": "Label pour le créateur"
+	},
+	"createdAt": {
+		"message": "Créé le",
+		"description": "Label pour la date de création"
+	},
+	"attempts": {
+		"message": "Tentatives",
+		"description": "Label pour les tentatives"
+	},
+	"completed": {
+		"message": "Complétés",
+		"description": "Label pour les défis complétés"
+	},
+	"percentCompleted": {
+		"message": "Taux complétion",
+		"description": "Label pour le taux de complétion"
+	},
+	"foundUser": {
+		"message": "Utilisateur non trouvé",
+		"description": "Message pour un utilisateur non trouvé"
+	},
+	"unknownUser": {
+		"message": "Inconnu",
+		"description": "Message pour un utilisateur inconnu"
+	},
+	"nickname": {
+		"message": "Pseudo",
+		"description": "Label pour le pseudo"
+	},
+	"inputPlaceholder": {
+		"message": "Entrer un pseudo Codewars",
+		"description": "Placeholder pour l'input du pseudo"
+	},
+	"ordinalFirst": {
+		"message": "er",
+		"description": "Suffixe ordinal pour le premier"
+	},
+	"ordinalOther": {
+		"message": "ème",
+		"description": "Suffixe ordinal pour les autres nombres"
 	}
 }

@@ -5,8 +5,6 @@ import {
 	points,
 	thousandSeparator,
 	formatDate,
-	loadTranslations,
-	getTranslation,
 } from './functions.js';
 var jqueryUrl = chrome.runtime.getURL('node_modules/jquery/dist/jquery.min.js');
 var script = document.createElement('script');
@@ -41,26 +39,32 @@ function fetchCodewarsData(user, infos) {
 function displayData(data) {
 	$('#name').html(data.username);
 	$('#honor').html(
-		`${getTranslation('honor')} : ${data.honor} ${points(data.honor)}`
+		`${chrome.i18n.getMessage('honor')} : ${data.honor} ${points(data.honor)}`
 	);
 	$('#score').html(
-		`${getTranslation('totalScore')} : ${data.ranks.overall.score} ${points(
+		`${chrome.i18n.getMessage('totalScore')} : ${
 			data.ranks.overall.score
-		)}`
+		} ${points(data.ranks.overall.score)}`
 	);
 	$('#katas').html(
-		`${getTranslation('succeededKata')} : ${data.codeChallenges.totalCompleted}`
+		`${chrome.i18n.getMessage('succeededKata')} : ${
+			data.codeChallenges.totalCompleted
+		}`
 	);
-	$('#rank').html(`${getTranslation('rank')} : ${data.ranks.overall.name}`);
+	$('#rank').html(
+		`${chrome.i18n.getMessage('rank')} : ${data.ranks.overall.name}`
+	);
 	if (data.leaderboardPosition === null) {
 		$('#leaderboardPosition').html(
-			`${getTranslation('leaderboard')} : ${getTranslation('unknownUser')}`
+			`${chrome.i18n.getMessage('leaderboard')} : ${chrome.i18n.getMessage(
+				'unknownUser'
+			)}`
 		);
 	} else {
 		$('#leaderboardPosition').html(
-			`${getTranslation('leaderboard')} : ${thousandSeparator(
+			`${chrome.i18n.getMessage('leaderboard')} : ${thousandSeparator(
 				data.leaderboardPosition
-			)}${getTranslation(
+			)}${chrome.i18n.getMessage(
 				data.leaderboardPosition === 1 ? 'ordinalFirst' : 'ordinalOther'
 			)}`
 		);
@@ -86,7 +90,7 @@ function clearData() {
 	$('#rank').empty();
 	$('#leaderboardPosition').empty();
 	$('#languages').empty();
-	$('#error').html(`${getTranslation('foundUser')}`);
+	$('#error').html(`${chrome.i18n.getMessage('foundUser')}`);
 	$('#inputPseudo').css('margin-bottom', '1rem');
 }
 
@@ -116,73 +120,76 @@ $(document).ready(function () {
 
 	swap();
 
-	loadTranslations().then(() => {
-		$('#nickname').html(getTranslation('nickname'));
-		$('#inputPseudo').attr('placeholder', getTranslation('inputPlaceholder'));
+	$('#nickname').html(chrome.i18n.getMessage('nickname'));
+	$('#inputPseudo').attr(
+		'placeholder',
+		chrome.i18n.getMessage('inputPlaceholder')
+	);
 
-		chrome.runtime.sendMessage({ type: 'pageCw' }, function (response) {
-			if (!response.cwPage) {
-				$('.selector').hide();
-			}
-			kataId = response.kataId;
-			if (kataId !== '') {
-				fetch(`https://www.codewars.com/api/v1/code-challenges/${kataId}`)
-					.then((response) => {
-						if (!response.ok) {
-							throw new Error('Invalid response from server');
-						}
-						return response.json();
-					})
-					.then((data) => {
-						$('#challengeRank').html(
-							`${getTranslation('rank')} : ${data.rank.name}`
-						);
-						$('#challengeCategory').html(
-							`${getTranslation('category')} : ${data.category}`
-						);
-						$('#challengeCreator').html(
-							`${getTranslation('creator')} : ${data.createdBy.username}`
-						);
-						$('#challengeCreatedAt').html(
-							`${getTranslation('createdAt')} : ${formatDate(data.createdAt)}`
-						);
-						$('#challengeTotalAttempts').html(
-							`${getTranslation('attempts')} : ${thousandSeparator(
-								data.totalAttempts
-							)}`
-						);
-						$('#challengeTotalCompleted').html(
-							`${getTranslation('completed')} : ${thousandSeparator(
-								data.totalCompleted
-							)}`
-						);
-						$('#challengePercentCompleted').html(
-							`${getTranslation('percentCompleted')} : ${(
-								(data.totalCompleted / data.totalAttempts) *
-								100
-							).toFixed(2)}%`
-						);
-					})
-					.catch((error) => {
-						console.error(error);
-					});
-			}
-		});
+	chrome.runtime.sendMessage({ type: 'pageCw' }, function (response) {
+		if (!response.cwPage) {
+			$('.selector').hide();
+		}
+		kataId = response.kataId;
+		if (kataId !== '') {
+			fetch(`https://www.codewars.com/api/v1/code-challenges/${kataId}`)
+				.then((response) => {
+					if (!response.ok) {
+						throw new Error('Invalid response from server');
+					}
+					return response.json();
+				})
+				.then((data) => {
+					$('#challengeRank').html(
+						`${chrome.i18n.getMessage('rank')} : ${data.rank.name}`
+					);
+					$('#challengeCategory').html(
+						`${chrome.i18n.getMessage('category')} : ${data.category}`
+					);
+					$('#challengeCreator').html(
+						`${chrome.i18n.getMessage('creator')} : ${data.createdBy.username}`
+					);
+					$('#challengeCreatedAt').html(
+						`${chrome.i18n.getMessage('createdAt')} : ${formatDate(
+							data.createdAt
+						)}`
+					);
+					$('#challengeTotalAttempts').html(
+						`${chrome.i18n.getMessage('attempts')} : ${thousandSeparator(
+							data.totalAttempts
+						)}`
+					);
+					$('#challengeTotalCompleted').html(
+						`${chrome.i18n.getMessage('completed')} : ${thousandSeparator(
+							data.totalCompleted
+						)}`
+					);
+					$('#challengePercentCompleted').html(
+						`${chrome.i18n.getMessage('percentCompleted')} : ${(
+							(data.totalCompleted / data.totalAttempts) *
+							100
+						).toFixed(2)}%`
+					);
+				})
+				.catch((error) => {
+					console.error(error);
+				});
+		}
+	});
 
-		chrome.storage.sync.get(['codewarsData'], function (result) {
-			if (result.codewarsData) {
-				displayData(result.codewarsData);
-				fetchCodewarsData(result.codewarsData.username, result.codewarsData);
-			}
-		});
+	chrome.storage.sync.get(['codewarsData'], function (result) {
+		if (result.codewarsData) {
+			displayData(result.codewarsData);
+			fetchCodewarsData(result.codewarsData.username, result.codewarsData);
+		}
+	});
 
-		$('#inputPseudo').on('keyup', function (event) {
-			if (event.key === 'Enter') {
-				let inputValue = $(this).val();
-				fetchCodewarsData(inputValue);
-				$(this).val('');
-			}
-		});
+	$('#inputPseudo').on('keyup', function (event) {
+		if (event.key === 'Enter') {
+			let inputValue = $(this).val();
+			fetchCodewarsData(inputValue);
+			$(this).val('');
+		}
 	});
 
 	$('input[type="checkbox"]').on('change', function () {
