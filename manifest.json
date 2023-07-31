@@ -3,6 +3,7 @@
 	"name": "Codewars Stats",
 	"version": "1.1.0",
 	"description": "Get your codewars stats",
+	"default_locale": "en",
 	"icons": {
 		"16": "assets/images/cw-b.png",
 		"48": "assets/images/cw-b.png",
