@@ -1,10 +1,15 @@
-let translations = null;
-
-function verifUrl(tab) {
-	if (!tab.url) return false;
+function verifKataUrl(url) {
+	if (!url) return false;
 	const isKataUrl =
-		/^https:\/\/www\.codewars\.com\/kata\/[a-zA-Z0-9]{24}\/?.*/.test(tab.url);
+		/^https:\/\/www\.codewars\.com\/kata\/[a-zA-Z0-9]{24}\/?.*/.test(url);
 	return isKataUrl;
+}
+
+function verifUserUrl(url) {
+	if (!url) return false;
+	const isUserUrl =
+		/^https:\/\/www\.codewars\.com\/users\/[a-zA-Z0-9_-]+(\/stats)?$/.test(url);
+	return isUserUrl;
 }
 
 function changeIcon(validUrl) {
@@ -56,7 +61,8 @@ function thousandSeparator(number) {
 }
 
 export {
-	verifUrl,
+	verifKataUrl,
+	verifUserUrl,
 	changeIcon,
 	findKata,
 	compare,
