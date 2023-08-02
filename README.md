@@ -7,8 +7,9 @@ CodewarsStats est une extension Chrome pratique pour les utilisateurs de [CodeWa
 
 ## Fonctionnalités
 
-- Affiche les statistiques d'un utilisateur CodeWars dans la popup
-- Fournit des informations sur le kata en cours lorsque vous naviguez sur les pages liées à un kata (nécessite d'être connecté à votre compte CodeWars)
+- Affiche les statistiques d'un utilisateur CodeWars dans la popup.
+- Fournit des informations sur le kata en cours lorsque vous naviguez sur les pages liées à un kata.
+- Fournit des informations supplémentaire dans la page de profil d'un utilisateur CodeWars.
 
 ## Installation
 
